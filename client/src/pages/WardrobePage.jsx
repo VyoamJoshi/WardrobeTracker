@@ -73,13 +73,13 @@ export function WardrobePage() {
   }, [fetchClothes]);
 
   // Log Wear Action
+  // Wear Action
   const handleWear = async (item) => {
     try {
       setOperating(true);
       const res = await clothingService.recordWear(item.clothing_id);
-      success('Wear count updated');
+      success('Marked as worn');
       setSelectedItem(res.data);
-      // Immediately update in-memory list
       setClothes((prev) =>
         prev.map((c) => (c.clothing_id === item.clothing_id ? res.data : c))
       );
@@ -87,6 +87,24 @@ export function WardrobePage() {
       error('Unable to update wear count.');
     } finally {
       setOperating(false);
+    }
+  };
+
+  // Card Click + Image Debug
+  const handleCardClick = async (item) => {
+    try {
+      const res = await clothingService.getClothingById(item.clothing_id);
+
+      console.log('WARDROBE IMAGE DEBUG:', {
+        id: item.clothing_id,
+        name: res.data?.name,
+        image_url: res.data?.image_url,
+      });
+
+      setSelectedItem(res.data);
+    } catch (err) {
+      console.error('WARDROBE DETAIL ERROR:', err);
+      setSelectedItem(item);
     }
   };
 
@@ -141,14 +159,6 @@ export function WardrobePage() {
     }
   };
 
-  const handleCardClick = async (item) => {
-    try {
-      const res = await clothingService.getClothingById(item.clothing_id);
-      setSelectedItem(res.data);
-    } catch {
-      setSelectedItem(item);
-    }
-  };
 
   const resetFilters = () => {
     setSearchQuery('');
