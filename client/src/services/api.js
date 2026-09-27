@@ -2,7 +2,7 @@
  * Core API Client
  */
 
-const BASE_URL = '/api';
+const BASE_URL = 'https://wardrobetracker.onrender.com/api';
 
 export class ApiError extends Error {
   constructor(message, status = 500, details = null) {
