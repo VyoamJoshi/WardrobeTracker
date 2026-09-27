@@ -53,10 +53,20 @@ export function resolveImageUrl(url) {
   if (!url) {
     return 'https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=800&auto=format&fit=crop&q=80';
   }
-  // If it's already an absolute URL or data URI, return as-is
-  if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:')) {
+
+  // Absolute URL or data URI
+  if (
+    url.startsWith('http://') ||
+    url.startsWith('https://') ||
+    url.startsWith('data:')
+  ) {
     return url;
   }
-  // If it starts with /uploads, return as relative path (Vite proxy forwards it)
+
+  // Images uploaded to the Render backend
+  if (url.startsWith('/uploads/')) {
+    return `https://wardrobetracker.onrender.com${url}`;
+  }
+
   return url;
 }
