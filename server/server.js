@@ -101,7 +101,7 @@ app.use((err, req, res, next) => {
   });
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`🚀 Personal Wardrobe Tracker Server running on port ${PORT}`);
   console.log(`🌐 Base API available at: http://localhost:${PORT}/api`);
 });
