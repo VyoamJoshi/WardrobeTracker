@@ -1,0 +1,17 @@
+import api from './api.js';
+
+export const authService = {
+  async register(data) {
+    return api.post('/auth/register', data);
+  },
+
+  async login(credentials) {
+    return api.post('/auth/login', credentials);
+  },
+
+  async getMe() {
+    return api.get('/auth/me');
+  },
+};
+
+export default authService;
